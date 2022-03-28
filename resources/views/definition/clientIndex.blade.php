@@ -11,7 +11,7 @@
                             placeholder=" ابحث عن اسم العميل او رقم العميل او رصيده" class="form-control">
                     </div>
                 </form>
-                <h4 class="card-title text-center">{{ __('Customer Table') }}جدول العملاء</h4>
+                <h4 class="card-title text-center">{{ __('Customer Table') }}</h4>
                 <a href="{{ route('definition.create') }}" class="btn btn-primary btn-block float-right mb-3"
                     style="width: 200px"><i class="fas fa-plus mr-1"></i>{{ __('Add Customer') }}</a>
 

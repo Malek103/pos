@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained('users', 'id');
             $table->unsignedFloat('price')->default(0);
             $table->unsignedFloat('cost')->default(0);
-            $table->unsignedInteger('quantity')->default(0);
+            $table->float('quantity')->default(0);
             $table->string('barcode')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('image')->nullable();

@@ -10,7 +10,7 @@ class hReceipt extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id', 'name', 'client_id', 'total', 'discount', 'type', 'status', 'user_id'
+        'id', 'name', 'client_id', 'total', 'discount', 'type', 'status', 'user_id', 'profit'
     ];
     protected $with = ['fReceipts'];
 

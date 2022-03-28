@@ -1,13 +1,13 @@
 @extends('dashboard.index')
 <style>
-    .yahya {
+    .receipt {
         list-style: none;
     }
 
-    .yahya li {
+    .receipt li {
         text-align: right;
-        font-size: 1.4rem;
-        font-weight: 700;
+        font-size: 1rem;
+        font-weight: 600;
     }
 
 </style>
@@ -85,27 +85,8 @@
                     <h3 class="text-center">{{ __('Sales Invoices') }}</h3>
                 @endif
                 @foreach ($h_receipts as $h_receipt)
-                    {{-- <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <ul class="yahya">
-                                    <li> {{ $h_receipt->name }} :اسم الفاتورة</li>
-                                </ul>
-
-                            </div>
-
-
-                            <div class="col-md-6">
-
-                                <ul class="yahya">
-                                    <li>{{ Money::format($h_receipt->total) }} :مجموع الفاتورة</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> --}}
                     <table>
-                        <tr>{{ $h_receipt->name }} :{{ __('Invoice Name') }}</tr>
+                        {{-- <tr>{{ $h_receipt->name }} :{{ __('Invoice Name') }}</tr> --}}
                     </table>
                     <table class="table table-bordered " id="dynamicAddRemove">
                         <tr class="text-right decoration-none text-center">
@@ -143,6 +124,26 @@
                             </tr>
                         @endforeach
                     </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+
+
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+
+
+
+                            </div>
+
+
+                            <ul class="receipt">
+                                <li>{{ Money::format($h_receipt->total) }} :مجموع الفاتورة</li>
+                            </ul>
+                        </div>
+                    </div>
                     <hr>
                 @endforeach
                 @if (count($debentures) > 0)

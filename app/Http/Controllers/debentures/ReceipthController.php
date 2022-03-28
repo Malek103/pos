@@ -19,6 +19,7 @@ class ReceipthController extends Controller
     {
         $debentures = Debenture::where('status', 'notdeleted')
             ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
             ->paginate(5);
         return view('debentures.index', [
             'debentures' => $debentures,
@@ -32,7 +33,8 @@ class ReceipthController extends Controller
      */
     public function create()
     {
-        $clients = Client::where('type', 'customer')->get();
+        $clients = Client::where('type', 'customer')->where('user_id',Auth::id())->get();
+
         return view('debentures.receipt.create', [
             'clients' => $clients,
         ]);
@@ -117,7 +119,7 @@ class ReceipthController extends Controller
     }
     public function showDelete()
     {
-        $debentures = Debenture::where('status', 'deleted')->paginate(5);
+        $debentures = Debenture::where('status', 'deleted')->where('user_id', Auth::id())->paginate(5);
         return view('debentures.index', [
             'debentures' => $debentures,
         ]);
@@ -126,6 +128,7 @@ class ReceipthController extends Controller
     {
         $search = $request->input('search');
         $debentures = Debenture::where('status', 'notdeleted')
+        ->where('user_id',Auth::id())
             ->where(function ($q) use ($search) {
                 $q->where('amount', 'LIKE', "%{$search}%")
                     ->orWhere('type', 'LIKE', "%{$search}%");

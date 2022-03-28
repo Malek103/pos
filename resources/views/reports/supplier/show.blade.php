@@ -1,5 +1,16 @@
 @extends('dashboard.index')
+<style>
+    .receipt {
+        list-style: none;
+    }
 
+    .receipt li {
+        text-align: right;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+</style>
 @section('content')
     <div class="container">
 
@@ -76,19 +87,22 @@
                 @foreach ($h_receipts as $h_receipt)
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h5 class="">
-                                    <li> {{ $h_receipt->name }} :{{ __('Invoice Name') }}</li>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5 class="">
+                            <div class="col-md-3">
 
-                                    <li>{{ Money::format($h_receipt->total) }} :{{ __('Total Bill') }}</li>
-                                </h5>
+
                             </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+
+
+                                <ul class="receipt">
+                                    <li>{{ $h_receipt->name }} :اسم الفاتورة</li>
+                                </ul>
+                            </div>
+
+
+
                         </div>
                     </div>
 
@@ -128,6 +142,26 @@
                             </tr>
                         @endforeach
                     </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+
+
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+
+
+
+                            </div>
+
+
+                            <ul class="receipt">
+                                <li>{{ Money::format($h_receipt->total) }} :مجموع الفاتورة</li>
+                            </ul>
+                        </div>
+                    </div>
                     <hr>
                 @endforeach
                 @if (count($debentures) > 0)

@@ -62,10 +62,17 @@ Route::resource('/reports-products', ProductsController::class)->middleware('aut
 Route::get('/reports-product-search', [ProductsController::class, 'search'])->middleware('auth')->name('reports.product.search');
 Route::get('/receipts/chart', [SaleController::class, 'chart'])->name('chart');
 
-Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware(['auth', 'password.confirm']);
-Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+Route::get('/profile', [UserProfileController::class, 'index'])->name('profile')->middleware('password.confirm');
+Route::get('/Change-Password', [UserProfileController::class, 'indexPassword'])->name('index.password')->middleware('auth');
+Route::patch('/Change-Password', [UserProfileController::class, 'storePassword'])->name('change.password')->middleware('auth');
+Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update')->middleware('password.confirm');
 Auth::routes();
-Route::get('/secret', function () {
+Route::get('/calendars/{date}', [BuyingController::class, 'calendar'])->name('calendars');
 
-    return 'malek';
-})->middleware('password.confirm');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

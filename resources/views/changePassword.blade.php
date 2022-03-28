@@ -5,8 +5,8 @@
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">{{ __('Create An Invoice') }}</h4>
-                <form action="{{ route('profile.update') }}" method="POST">
+                <h4 class="card-title text-center">{{ __('Password Settings') }}</h4>
+                <form action="{{ route('change.password') }}" method="POST">
                     @method('patch')
                     @csrf
                     @if ($errors->any())
@@ -34,43 +34,29 @@
                     @endif
                     <div class="col-md-12">
                         <div class="form-row text-right">
-
-
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label style="font-size: 20px" for="name">{{ __('User Email') }}</label>
-                                    <input tabindex="1" type="text" name="email" id="email" placeholder="البريد الالكتروني"
-                                        class="form-control text-right" value="{{ $user->email }}" required />
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label style="font-size: 20px" for="name">{{ __('User Name') }}</label>
-                                    <input tabindex="1" type="text" name="name" id="name" placeholder="أسم المستخدم"
-                                        class="form-control text-right" value="{{ $user->name }}" required />
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-row text-right">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group mb-3">
                                     <label style="font-size: 20px" for="name">{{ __('Confirm Password') }}</label>
-                                    <input tabindex="1" type="password" name="password_confirmation" id="password-confirm"
-                                        placeholder="{{ __('Confirm Password') }}" class="form-control text-right" />
+                                    <input tabindex="3" type="password" name="password_confirmation" id="password-confirm"
+                                        placeholder="{{ __('Confirm Password') }}" class="form-control text-right"
+                                        required />
                                 </div>
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group mb-3">
                                     <label style="font-size: 20px" for="name">{{ __('New Password') }}</label>
+                                    <input tabindex="2" type="password" name="new_password" id="new_password"
+                                        placeholder="{{ __('New Password') }}" class="form-control text-right" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label style="font-size: 20px" for="name">{{ __('Password') }}</label>
                                     <input tabindex="1" type="password" name="password" id="password"
-                                        placeholder="{{ __('New Password') }}" class="form-control text-right" />
+                                        placeholder="{{ __('New Password') }}" class="form-control text-right"
+                                        required />
                                 </div>
 
                             </div>

@@ -27,7 +27,7 @@ class catchController extends Controller
      */
     public function create()
     {
-        $clients = Client::where('type', 'supplier')->get();
+        $clients = Client::where('type', 'supplier')->where('user_id',Auth::id())->get();
         return view('debentures.catch.create', [
             'clients' => $clients,
         ]);

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\bills;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Product;
+use App\Models\Receipt;
 use App\Models\fReceipt;
 use App\Models\hReceipt;
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Scope;
+use SebastianBergmann\Environment\Console;
 use Symfony\Component\Console\Input\Input;
 
 class BuyingController extends Controller
@@ -37,8 +40,8 @@ class BuyingController extends Controller
     public function create()
     {
         //
-        $products = Product::all();
-        $clients = Client::where('type', 'supplier')->get();
+        $products = Product::where('status','active')->where('user_id',Auth::id())->get();
+        $clients = Client::where('type', 'supplier')->where('user_id',Auth::id())->get();
 
         return view('bills.buying.create', [
             'products' => $products,
@@ -137,33 +140,37 @@ class BuyingController extends Controller
     {
         $h_receipt = hReceipt::findOrFail($id);
         $client = Client::where('id', $h_receipt->client_id)->first();
-
+        $h_receipt->update(['status' => 'deleted']);
         $totalAccount = $client->account - $h_receipt->total;
 
         $client->update(['account' => $totalAccount]);
         $f_receipts = fReceipt::where('header_id', $h_receipt->id)->get();
         foreach ($f_receipts as $key => $value) {
             $quantity = $value->product['quantity'] - $value['quantity'];
-            $product = Product::where('id', $value->product['id']);
+            $product = Product::where('id', $value->product['id'])->first();
+
             $receipts = fReceipt::where('product_id', $value['product_id'])
+
                 ->where('header_id', '<>', $h_receipt->id)
+
                 ->orderBy('created_at', 'desc')
                 ->first();
 
-            if (empty($receipts->cost)) {
+            if (empty($receipts->cost) || $receipts->header->status=='deleted'|| $receipts->header->type=='sale' ) {
 
                 $product->update(['quantity' => $quantity, 'cost' => 0]);
             } else {
 
+
                 $product->update(['quantity' => $quantity, 'cost' => $receipts->cost]);
             }
         }
-        $h_receipt->update(['status' => 'deleted']);
+
         return redirect()->route('buying.index')->withSuccessMessage('تم حذف الفاتورة بنجاح');
     }
     public function showDelete()
     {
-        $receipts = hReceipt::where('type', 'buying')->where('status', 'deleted')->paginate(5);
+        $receipts = hReceipt::where('type', 'buying')->where('status', 'deleted')->where('user_id',Auth::id())->orderBy('updated_at', 'desc')->paginate(5);
 
 
         return view('bills.buying.index', [
@@ -175,6 +182,7 @@ class BuyingController extends Controller
         $search = $request->input('search');
         $receipts = hReceipt::where('type', 'buying')
             ->where('status', 'notdeleted')
+            ->where('user_id',Auth::id())
             ->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('total', 'LIKE', "%{$search}%");
@@ -190,5 +198,24 @@ class BuyingController extends Controller
             'name' => ['required', 'string', 'min:1', 'max:255'],
 
         ];
+    }
+    public function calendar($date)
+    {
+
+        $startDay = Carbon::createFromFormat('Y-d-m', $date)->format('Y-m-d 00:00:00');
+        $endDay = Carbon::createFromFormat('Y-d-m', $date)->format('Y-m-d 23:59:59');
+
+        $data =  hReceipt::where('type', 'sale')
+        ->where('user_id',Auth::id())
+            ->where('created_at', '>=', $startDay)
+            ->where('created_at', '<=', $endDay)
+            ->get(['total', 'profit']);
+        $total = 0;
+        $profit = 0;
+        foreach ($data as $key => $value) {
+            $total += $value['total'];
+            $profit += $value['profit'];
+        }
+        return [$total, $profit];
     }
 }

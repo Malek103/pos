@@ -17,7 +17,7 @@
 
                 </div>
 
-                <h4 class="card-title text-center">تقرير الموردين</h4>
+                <h4 class="card-title text-center">{{ __('Supplier Report') }}</h4>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>

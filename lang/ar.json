@@ -112,5 +112,8 @@
     "User Name":"اسم المستخدم",
     "User Email":"البريد الالكتروني",
     "New Password":"كلمة مرور جديدة",
-    "Confirm Password":"تأكيد كلمة المرور"
+    "Confirm Password":"تأكيد كلمة المرور",
+    "Last 5 Sales Invoices":"اخر 5 فواتير بيع",
+    "Password":"كلمة السر",
+    "Password Settings":"اعدادات كلمة السر"
 }

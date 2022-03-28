@@ -4,14 +4,14 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <x-form.input placeholder="رقم العميل" tabindex="2" name="phone" label="رقم العميل"
-                        :value="$client->phone" />
+                    <x-form.input placeholder="{{ __('Customer Number') }}" tabindex="2" name="phone"
+                        label="{{ __('Customer Number') }}" :value="$client->phone" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <x-form.input placeholder="اسم العميل" tabindex="1" name="name" id="name" label="اسم العميل"
-                        :value="$client->name" required />
+                    <x-form.input placeholder="{{ __('Client Name') }}" tabindex="1" name="name" id="name"
+                        label="{{ __('Client Name') }}" :value="$client->name" required />
                 </div>
             </div>
 

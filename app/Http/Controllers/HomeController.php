@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $bills = hReceipt::where('type', 'sale')->where('user_id',Auth::id())->orderBy('created_at', 'desc')->limit(5)->get();
         $products = Product::where('user_id', Auth::id())->orderBy('sold', 'desc')->limit(5)->get();
         $productsNum = Product::where('user_id', Auth::id())->get()->count();
         $clientsNum = Client::where('user_id', Auth::id())->get()->count();
@@ -50,6 +51,7 @@ class HomeController extends Controller
             'saleNum' => $saleNum,
             'cash' => $cash,
             'debt' => $debt,
+            'bills' => $bills,
         ]);
     }
 }

@@ -1,50 +1,84 @@
-@extends('auth.app')
-@section('content')
-    <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
-        @csrf
-        <span class="login100-form-title p-b-26">
-            Welcome
-        </span>
-        <span class="login100-form-title p-b-48">
-            {{-- <i class="zmdi zmdi-font"></i> --}}
-            <img src="{{ asset('images/poslogo.jpg') }}" width="150px" height="150px" alt="">
-        </span>
-        <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-            <input id="email" type="email" class="form-control input100 @error('email') is-invalid @enderror" name="email"
-                value="{{ old('email') }}" required autocomplete="email" autofocus>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        /* background-color: #17a2b8; */
+        height: 100vh;
+        background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url({{ asset('ponitofsale/assets/img/pointofsale.jpg') }});
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-            {{-- <input class="input100" type="text" name="email" /> --}}
-            <span class="focus-input100" data-placeholder="Email"></span>
-        </div>
-        <div class="wrap-input100 validate-input" data-validate="Enter password">
-            <span class="btn-show-pass">
-                <i class="zmdi zmdi-eye"></i>
-            </span>
-            <input id="password" type="password" class="form-control input100 @error('password') is-invalid @enderror"
-                name="password" required autocomplete="current-password">
+    #login .container #login-row #login-column #login-box {
+        margin-top: 120px;
+        max-width: 600px;
+        height: 320px;
+        border: 1px solid #9C9C9C;
+        background-color: #EAEAEA;
+    }
 
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-            {{-- <input class="input100" type="password" name="pass" /> --}}
-            <span class="focus-input100" data-placeholder="Password"></span>
-        </div>
-        <div class="container-login100-form-btn">
-            <div class="wrap-login100-form-btn">
-                <div class="login100-form-bgbtn"></div>
-                <button class="login100-form-btn">Login</button>
+    #login .container #login-row #login-column #login-box #login-form {
+        padding: 20px;
+    }
+
+    #login .container #login-row #login-column #login-box #login-form #register-link {
+        margin-top: -85px;
+    }
+
+</style>
+
+<body>
+    <div id="login">
+        <h3 class="text-center text-white pt-5"></h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Email:</label><br>
+                                <input id="email" type="email"
+                                    class="form-control input100 @error('email') is-invalid @enderror" name="email"
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <input id="password" type="password"
+                                    class="form-control input100 @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input
+                                            id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <button type="submit" name="submit" class="btn btn-info btn-md"
+                                    value="submit">Login</button>
+
+                            </div>
+                            <div id="register-link" class="text-right">
+                                <a href="{{ route('register') }}" class="text-info">Register here</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="text-center p-t-115">
-            <span class="txt1"> Don’t have an account? </span>
-            <a class="txt2" href="{{ route('register') }}"> Sign Up </a>
-        </div>
-    </form>
-@endsection
+    </div>
+</body>

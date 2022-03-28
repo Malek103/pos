@@ -109,7 +109,7 @@
                                 @endforeach
                             @else
                                 <div class="alert alert-warning text-center" role="alert">
-                                    {{ __('There are no products !') }} ! لا يوجد منتجات
+                                    {{ __('There are no products !') }} !
                                 </div>
                             @endif
 

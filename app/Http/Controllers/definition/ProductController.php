@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -44,7 +44,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = $this->rules();
+        // $product = $request->product();
+
+        $rules = $this->rules($request);
         $request->validate($rules);
         $data = $request->except('image');
         if ($request->favare === 'on') {
@@ -99,9 +101,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
 
-        $rules = $this->rules();
+        $rules = $this->rules($id);
         $request->validate($rules);
         $product = Product::findOrFail($id);
         $data = $request->except('image');
@@ -147,11 +148,17 @@ class ProductController extends Controller
         return redirect()->route('products.index')->withSuccessMessage('تم حذف المنتج بنجاح');
     }
 
-    protected function rules()
+    protected function rules($id)
     {
+
         return [
             'name' => ['required', 'string', 'min:1', 'max:255'],
-            'barcode' => ['nullable', 'string', 'unique:products,barcode'],
+            'barcode' => [
+                'nullable',
+                'string',
+                Rule::unique('products')->ignore($id, 'id'),
+
+            ],
             'price' => ['required'],
             'image' => 'nullable|image'
 

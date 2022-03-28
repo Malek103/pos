@@ -67,8 +67,8 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="{{ asset('dashboard/index.html') }}"><img
-                        src="{{ asset('dashboard/images/logo.svg') }}" class="mr-2" alt="logo" /></a>
+                <a class="navbar-brand brand-logo mr-5" href="{{ asset('dashboard/index.html') }}">
+                    Point Of Sale</a>
                 <a class="navbar-brand brand-logo-mini" href="{{ asset('dashboard/index.html') }}"><img
                         src="{{ asset('dashboard/images/logo-mini.svg') }}" alt="logo" /></a>
             </div>
@@ -99,6 +99,20 @@
                                 class="d-none">
                                 @csrf
                             </form>
+                        </div>
+
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown">
+                            {{ __('language') }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown">
+                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                    class="dropdown-item">
+
+                                    {{ $properties['native'] }}
+                                </a>
+                            @endforeach
                         </div>
                     </li>
 
